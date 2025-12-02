@@ -1,0 +1,126 @@
+import { Box, Typography } from "@mui/material";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { useThemeMode } from "../context/theme";
+import { useLanguage } from "../context/language";
+import { useTranslation } from "react-i18next";
+
+interface Props {
+  monthlyTemps: number[];
+}
+
+const Average: React.FC<Props> = ({ monthlyTemps }) => {
+  const { mode } = useThemeMode();
+  const { lang } = useLanguage();
+  const { t } = useTranslation();
+
+  const months =
+    lang === "fa"
+      ? [
+          "فروردین",
+          "اردیبهشت",
+          "خرداد",
+          "تیر",
+          "مرداد",
+          "شهریور",
+          "مهر",
+          "آبان",
+          "آذر",
+          "دی",
+          "بهمن",
+          "اسفند",
+        ]
+      : [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+
+  let data = months.map((m, i) => ({
+    month: m,
+    temp: monthlyTemps[i] || 0,
+  }));
+
+  if (lang === "fa") {
+    data = data.reverse();
+  }
+
+  return (
+    <Box
+      sx={{
+        width: { xs: "95%", sm: "90%", md: "45%" },
+        bgcolor: mode === "light" ? "#e1e9ee" : "#292f45",
+        p: { xs: 2, md: 3 },
+        borderRadius: 5,
+        mt: { xs: 3, md: 0 },
+      }}
+    >
+      <Typography
+        sx={{
+          fontWeight: "bold",
+          fontSize: { xs: "16px", md: "20px" },
+          mb: 2,
+          color: mode === "light" ? "#003464" : "#e1e9ee",
+          textAlign: lang === "fa" ? "right" : "left",
+        }}
+      >
+        {t("avg")}
+      </Typography>
+
+      <Box sx={{ width: "100%", height: { xs: 150, sm: 180, md: 155 } }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={data}
+            style={{ direction: lang === "fa" ? "rtl" : "ltr" }}
+          >
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke={mode === "light" ? "#ccc" : "#555"}
+            />
+
+            <XAxis
+              dataKey="month"
+              stroke={mode === "light" ? "#003464" : "#e1e9ee"}
+              tick={{ fontSize: 11 }}
+            />
+
+            <YAxis
+              stroke={mode === "light" ? "#003464" : "#e1e9ee"}
+              domain={[0, 40]}
+              ticks={[10, 20, 30, 40]}
+              tick={{ fontSize: 11 }}
+            />
+
+            <Tooltip />
+
+            <Line
+              type="monotone"
+              dataKey="temp"
+              stroke={mode === "light" ? "#074979" : "#90caf9"}
+              strokeWidth={3}
+              activeDot={{ r: 6 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </Box>
+    </Box>
+  );
+};
+
+export default Average;

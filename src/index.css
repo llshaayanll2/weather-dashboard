@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "Vazir";
+  src: url("/fonts/Vazirmatn-Medium.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+}
