@@ -42,8 +42,8 @@ const Dashboard = () => {
     <Box
       sx={{
         bgcolor: mode === "light" ? "#f3fafe" : "black",
-        minHeight: "100vh",         // ⬅ کامل درست شد
-        pb: "120px",                // ⬅ برای اینکه محتوا زیر Footer نرود
+        minHeight: "100vh",        
+        pb: "120px",              
       }}
     >
       <HeaderDash onSearch={fetchWeather} />
