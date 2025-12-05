@@ -12,16 +12,23 @@ import {
 import type { SelectChangeEvent } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
-import { useLanguage } from "../context/language";
-import { useThemeMode } from "../context/theme";
+import { useLanguage } from "../context/languageContext";
+import { useTheme } from "@mui/material/styles";
+import { useState } from "react";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { mode } = useThemeMode();
   const { lang, changeLanguage } = useLanguage();
+  const theme = useTheme();
+
+  const [name, setName] = useState(""); 
 
   const handleLogin = () => {
+    if (!name.trim()) {
+     
+      return;
+    }
     navigate("/dashboard");
   };
 
@@ -32,9 +39,9 @@ const Login: React.FC = () => {
   return (
     <Box
       sx={{
-        width: "100vw",
-        height: "100vh",
-        bgcolor: mode === "light" ? "#eefaff" : "#25262e",
+        width: "100%",
+        minHeight: "100vh",
+        bgcolor: theme.palette.background.default,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -42,12 +49,16 @@ const Login: React.FC = () => {
         gap: 2,
         direction: lang === "fa" ? "rtl" : "ltr",
         px: 2,
+        py: 2,
+        boxSizing: "border-box",
+        overflowX: "hidden",
       }}
     >
       <Box
         sx={{
           width: { xs: "100%", sm: "85%", md: "60%", lg: "50%" },
-          bgcolor: mode === "light" ? "white" : "#292F45",
+          maxWidth: 900,
+          bgcolor: theme.palette.background.paper,
           borderRadius: 3,
           boxShadow: 4,
           overflow: "hidden",
@@ -61,18 +72,22 @@ const Login: React.FC = () => {
         >
           <Box
             sx={{
-              py: 6,
-              px: { xs: 4, md: 5 },
+              py: { xs: 4, md: 5 },
+              px: { xs: 3, md: 5 },
               width: { xs: "100%", md: "50%" },
               textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: 4,
+              boxSizing: "border-box",
             }}
           >
             <Typography
               sx={{
-                mt: 2,
                 fontSize: "24px",
                 fontWeight: "bold",
-                color: mode === "light" ? "#003464" : "white",
+                color: theme.palette.text.primary,
               }}
             >
               {t("Login")}
@@ -82,23 +97,24 @@ const Login: React.FC = () => {
               label={t("EnterYourName")}
               fullWidth
               required
+              value={name} 
+              onChange={(e) => setName(e.target.value)} 
               sx={{
-                mt: 4,
                 "& .MuiInputBase-input": {
-                  color: mode === "light" ? "#003464" : "#ffffff",
+                  color: theme.palette.text.primary,
                 },
                 "& .MuiInputLabel-root": {
-                  color: mode === "light" ? "#003464" : "#ffffff",
+                  color: theme.palette.text.primary,
                 },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: mode === "light" ? "#003464" : "#ffffff",
+                    borderColor: theme.palette.text.primary,
                   },
                   "&:hover fieldset": {
-                    borderColor: mode === "light" ? "#074979" : "#ffffff",
+                    borderColor: theme.custom.inputHover,
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: mode === "light" ? "#074979" : "#ffffff",
+                    borderColor: theme.custom.inputHover,
                   },
                 },
               }}
@@ -108,7 +124,7 @@ const Login: React.FC = () => {
               variant="contained"
               fullWidth
               sx={{
-                mt: { xs: 6, md: 25 },
+                mt: 4,
                 p: 2,
                 bgcolor: "#2196F3",
                 fontSize: "16px",
@@ -123,10 +139,10 @@ const Login: React.FC = () => {
             component="img"
             src="/image/mainLight.png"
             sx={{
-              display: "block",
               width: { xs: "100%", md: "50%" },
-              height: { xs: "200px", md: "auto" },
+              height: { xs: "auto", md: "100%" },
               objectFit: "cover",
+              display: "block",
             }}
           />
         </Box>
@@ -136,28 +152,22 @@ const Login: React.FC = () => {
         variant="standard"
         sx={{
           minWidth: 140,
-          mt: 2,
+          mt: 1,
           "& .MuiInputLabel-root": {
-            color: mode === "light" ? "#003464" : "#ffffff",
+            color: theme.palette.text.primary,
           },
           "& .MuiInputBase-input": {
-            color: mode === "light" ? "#003464" : "#ffffff",
+            color: theme.palette.text.primary,
           },
           "& .MuiSvgIcon-root": {
-            color: mode === "light" ? "#003464" : "#ffffff",
+            color: theme.palette.text.primary,
           },
           "& .MuiInput-underline:before": {
-            borderBottomColor: mode === "light" ? "#003464" : "#ffffff",
-          },
-          "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-            borderBottomColor: mode === "light" ? "#074979" : "#ffffff",
-          },
-          "& .MuiInput-underline:after": {
-            borderBottomColor: mode === "light" ? "#074979" : "#ffffff",
+            borderBottomColor: theme.palette.text.primary,
           },
         }}
       >
-        <InputLabel id="language-label">Language</InputLabel>
+        <InputLabel id="language-label">{t("language")}</InputLabel>
 
         <Select
           labelId="language-label"

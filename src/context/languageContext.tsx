@@ -11,10 +11,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const applyLanguageStyles = (lng: "fa" | "en") => {
     document.documentElement.dir = lng === "fa" ? "rtl" : "ltr";
 
-    document.documentElement.style.fontFamily =
-      lng === "fa"
-        ? 'Vazir, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif'
-        : '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif';
+
   };
 
   useEffect(() => {

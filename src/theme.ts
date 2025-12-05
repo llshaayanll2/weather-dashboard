@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "inherit", 
+    fontFamily: 'Vazirmatn, Roboto, Arial, sans-serif',
   },
 });
 

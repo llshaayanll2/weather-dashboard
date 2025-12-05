@@ -3,12 +3,13 @@ import PlaceIcon from "@mui/icons-material/Place";
 import type { MainWeatherProps } from "../types";
 import Average from "./average";
 import { t } from "i18next";
-import { useThemeMode } from "../context/theme";
-import { useLanguage } from "../context/language";
+import { useLanguage } from "../context/languageContext";
+import { useTheme } from "@mui/material/styles";
 
 const MainDash: React.FC<MainWeatherProps> = ({ weather }) => {
-  const { mode } = useThemeMode();
   const { lang } = useLanguage();
+  const theme = useTheme();
+
   const locale = lang === "fa" ? "fa-IR" : "en-US";
 
   const getWeatherImage = (main: string, desc: string) => {
@@ -44,14 +45,14 @@ const MainDash: React.FC<MainWeatherProps> = ({ weather }) => {
         sx={{
           width: { xs: "95%", md: "38%" },
           borderRadius: 5,
-          bgcolor: mode === "light" ? "#e1e9ee" : "#292f45",
+          bgcolor: theme.custom.card,
         }}
       >
         <Box sx={{ p: 2 }}>
           {!weather ? (
             <Typography
               sx={{
-                color: mode === "light" ? "#292f45" : "#e1e9ee",
+                color: theme.palette.text.primary,
                 fontWeight: "bold",
               }}
             >
@@ -73,25 +74,26 @@ const MainDash: React.FC<MainWeatherProps> = ({ weather }) => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      p: 1,
+                      py: 1,
+                      px: 2,
                       mt: 1,
                       width: "fit-content",
                       fontSize: "17px",
                       borderRadius: 5,
                       gap: 1,
-                      bgcolor: "#cdd9e0",
-                      color: "#003464",
+                      bgcolor: theme.custom.cardSecondary,
+                      color: theme.palette.text.primary,
                       mb: 2,
                     }}
                   >
-                    <PlaceIcon />
+                    <PlaceIcon sx={{ color: theme.palette.text.primary }} />
                     {weather.name}
                   </Box>
 
                   <Typography
                     sx={{
                       fontWeight: "bold",
-                      color: mode === "light" ? "#003464" : "#ffffff",
+                      color: theme.palette.text.primary,
                       fontSize: "28px",
                     }}
                   >
@@ -104,7 +106,7 @@ const MainDash: React.FC<MainWeatherProps> = ({ weather }) => {
                     <Typography
                       sx={{
                         fontSize: "12px",
-                        color: mode === "light" ? "#000000" : "#ffffff",
+                        color: theme.palette.text.secondary,
                       }}
                     >
                       {new Date(weather.dt * 1000).toLocaleDateString(locale)}
@@ -113,7 +115,7 @@ const MainDash: React.FC<MainWeatherProps> = ({ weather }) => {
                     <Typography
                       sx={{
                         fontSize: "12px",
-                        color: mode === "light" ? "#000000" : "#ffffff",
+                        color: theme.palette.text.secondary,
                       }}
                     >
                       {new Date(weather.dt * 1000).toLocaleTimeString(locale)}
@@ -125,17 +127,17 @@ const MainDash: React.FC<MainWeatherProps> = ({ weather }) => {
                       mt: 2,
                       fontWeight: "bold",
                       fontSize: "32px",
-                      color: mode === "light" ? "#003464" : "#ffffff",
+                      color: theme.palette.text.primary,
                     }}
                   >
-                    {weather.main.temp}°{lang === "fa" ? "C" : "C"}
+                    {weather.main.temp}°C
                   </Typography>
 
                   <Typography
                     sx={{
                       fontSize: "13px",
                       mt: 0.5,
-                      color: mode === "light" ? "#000000" : "#ffffff",
+                      color: theme.palette.text.secondary,
                     }}
                   >
                     {weather.weather[0].description}
@@ -159,7 +161,7 @@ const MainDash: React.FC<MainWeatherProps> = ({ weather }) => {
                     alt={weather.weather[0].description}
                     sx={{
                       width: { xs: "180px", sm: "220px", md: "200px" },
-                      height: "auto",
+                      height: "220px",
                       objectFit: "contain",
                     }}
                   />

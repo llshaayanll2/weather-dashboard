@@ -8,18 +8,18 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useThemeMode } from "../context/theme";
-import { useLanguage } from "../context/language";
+import { useLanguage } from "../context/languageContext";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material/styles";
 
 interface Props {
   monthlyTemps: number[];
 }
 
 const Average: React.FC<Props> = ({ monthlyTemps }) => {
-  const { mode } = useThemeMode();
   const { lang } = useLanguage();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const months =
     lang === "fa"
@@ -65,7 +65,7 @@ const Average: React.FC<Props> = ({ monthlyTemps }) => {
     <Box
       sx={{
         width: { xs: "95%", sm: "90%", md: "45%" },
-        bgcolor: mode === "light" ? "#e1e9ee" : "#292f45",
+        bgcolor: theme.custom.card,
         p: { xs: 2, md: 3 },
         borderRadius: 5,
         mt: { xs: 3, md: 0 },
@@ -76,7 +76,7 @@ const Average: React.FC<Props> = ({ monthlyTemps }) => {
           fontWeight: "bold",
           fontSize: { xs: "16px", md: "20px" },
           mb: 2,
-          color: mode === "light" ? "#003464" : "#e1e9ee",
+          color: theme.palette.text.primary,
           textAlign: lang === "fa" ? "right" : "left",
         }}
       >
@@ -91,28 +91,35 @@ const Average: React.FC<Props> = ({ monthlyTemps }) => {
           >
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke={mode === "light" ? "#ccc" : "#555"}
+              stroke={theme.palette.divider}
             />
 
             <XAxis
               dataKey="month"
-              stroke={mode === "light" ? "#003464" : "#e1e9ee"}
+              stroke={theme.palette.text.primary}
               tick={{ fontSize: 11 }}
             />
 
             <YAxis
-              stroke={mode === "light" ? "#003464" : "#e1e9ee"}
+              stroke={theme.palette.text.primary}
               domain={[0, 40]}
               ticks={[10, 20, 30, 40]}
               tick={{ fontSize: 11 }}
             />
 
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                background: theme.custom.cardSecondary,
+                borderRadius: 8,
+                border: "none",
+                color: theme.palette.text.primary,
+              }}
+            />
 
             <Line
               type="monotone"
               dataKey="temp"
-              stroke={mode === "light" ? "#074979" : "#90caf9"}
+              stroke={theme.palette.primary.main}
               strokeWidth={3}
               activeDot={{ r: 6 }}
             />

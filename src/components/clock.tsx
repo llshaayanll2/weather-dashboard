@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
-import { useLanguage } from "../context/language";
-import { useThemeMode } from "../context/theme";
+import { useLanguage } from "../context/languageContext";
+import theme from "../theme";
 
 const LiveClock = () => {
   const { lang } = useLanguage();
@@ -22,12 +22,11 @@ const LiveClock = () => {
   };
 
   const locale = lang === "fa" ? "fa-IR" : "en-US";
-  const { mode } = useThemeMode();
   return (
     <Typography
       sx={{
         fontSize: "15px",
-        color: mode === "light" ? "#003464" : "white",
+        color: theme.palette.text.primary,
       }}
     >
       {time.toLocaleString(locale, options)}

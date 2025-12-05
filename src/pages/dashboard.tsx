@@ -1,16 +1,16 @@
 // Dashboard.tsx
 import { useState } from "react";
 import axios from "axios";
-import HeaderDash from "../components/headerDash";
-import MainDash from "../components/mainDash";
+import HeaderDash from "../components/headerDashboard";
+import MainDash from "../components/mainDashboard";
 import Forecast from "../components/forecast";
 import type { WeatherData } from "../types";
 import { Box } from "@mui/material";
-import { useThemeMode } from "../context/theme";
-import Footer from "../components/footer";
+import { useTheme } from "@mui/material/styles";
+import Footer from "../components/footerDashboard";
 
 const Dashboard = () => {
-  const { mode } = useThemeMode();
+  const theme = useTheme();
   const API_KEY = "5b5a3eb388ec33924aa663275e11fd86";
 
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -41,9 +41,9 @@ const Dashboard = () => {
   return (
     <Box
       sx={{
-        bgcolor: mode === "light" ? "#f3fafe" : "black",
-        minHeight: "100vh",        
-        pb: "120px",              
+        bgcolor: theme.palette.background.default,
+        minHeight: "100vh",
+        pb: "120px",
       }}
     >
       <HeaderDash onSearch={fetchWeather} />

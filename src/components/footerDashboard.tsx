@@ -1,20 +1,20 @@
 import { Box, Typography } from "@mui/material";
-import { useThemeMode } from "../context/theme";
 import { useTranslation } from "react-i18next";
-import { useLanguage } from "../context/language";
+import { useLanguage } from "../context/languageContext";
 import LiveClock from "./clock";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { useTheme } from "@mui/material/styles";
 
 const Footer = () => {
-  const { mode } = useThemeMode();
   const { lang } = useLanguage();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   return (
     <Box
       sx={{
-        bgcolor: mode === "light" ? "#F3FAFE" : "#292F45",
+        bgcolor: theme.custom.footer,
         p: { xs: 2, md: 3 },
         position: "fixed",
         width: "100%",
@@ -37,7 +37,7 @@ const Footer = () => {
       >
         <Typography
           sx={{
-            color: mode === "light" ? "#003464" : "white",
+            color: theme.palette.text.primary,
             fontSize: { xs: "12px", md: "14px" },
             whiteSpace: "nowrap",
             px: 2,
@@ -56,12 +56,10 @@ const Footer = () => {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <MailOutlineIcon
-              sx={{ color: mode === "light" ? "#003464" : "white" }}
-            />
+            <MailOutlineIcon sx={{ color: theme.palette.text.primary }} />
             <Typography
               sx={{
-                color: mode === "light" ? "#003464" : "white",
+                color: theme.palette.text.primary,
                 fontSize: "14px",
                 whiteSpace: "nowrap",
               }}
@@ -71,9 +69,7 @@ const Footer = () => {
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <CalendarMonthIcon
-              sx={{ color: mode === "light" ? "#003464" : "white" }}
-            />
+            <CalendarMonthIcon sx={{ color: theme.palette.text.primary }} />
             <Typography
               sx={{
                 fontSize: "14px",
@@ -82,6 +78,7 @@ const Footer = () => {
                 textAlign: "center",
                 display: "flex",
                 justifyContent: "center",
+                color: theme.palette.text.primary,
               }}
             >
               <LiveClock />

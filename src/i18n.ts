@@ -20,6 +20,7 @@ i18n.use(initReactI18next).init({
         nadin: " All rights of this site are reserved for Nadin Sadr Aria Engineering Company",
         contact: "Contact us : info@nadin.ir",
         fiveDays: "5 Days Forecast",
+        language:"Language"
       },
     },
     fa: {
@@ -39,6 +40,7 @@ i18n.use(initReactI18next).init({
         nadin: "همه حقوق این سایت برای شرکت مهندسی نادین صدر آریا محفوظ است.",
         contact: "تماس با ما : info@nadin.ir",
         fiveDays: "پیش بینی 5 روز آینده",
+        language:"زبان"
       },
     },
   },

@@ -13,9 +13,10 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router";
-import { useLanguage } from "../context/language";
+import { useLanguage } from "../context/languageContext";
 import { useTranslation } from "react-i18next";
-import { useThemeMode } from "../context/theme";
+import { useThemeMode } from "../context/themeContext";
+import { useTheme } from "@mui/material/styles";
 
 const Setting: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -25,6 +26,7 @@ const Setting: React.FC = () => {
   const navigate = useNavigate();
 
   const { mode, setMode } = useThemeMode();
+  const theme = useTheme();
 
   const open = Boolean(anchorEl);
 
@@ -32,22 +34,14 @@ const Setting: React.FC = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleClose = () => setAnchorEl(null);
+
+  const handleModeChange = (_e: any, newMode: any) => {
+    if (newMode) setMode(newMode);
   };
 
-  const handleModeChange = (
-    _event: React.MouseEvent<HTMLElement>,
-    newMode: "light" | "dark" | null
-  ) => {
-    if (newMode !== null) setMode(newMode);
-  };
-
-  const handleLangChange = (
-    _event: React.MouseEvent<HTMLElement>,
-    newLang: "en" | "fa" | null
-  ) => {
-    if (newLang !== null) changeLanguage(newLang);
+  const handleLangChange = (_e: any, newLang: any) => {
+    if (newLang) changeLanguage(newLang);
   };
 
   const login = () => navigate("/");
@@ -57,10 +51,10 @@ const Setting: React.FC = () => {
       <IconButton onClick={handleOpen}>
         <SettingsOutlinedIcon
           sx={{
-            border: "1px solid #BBC1C4",
+            border: `1px solid #90a4ae`,
             borderRadius: "12px",
             p: 2,
-            color: "#BBC1C4",
+            color: "#90a4ae",
           }}
         />
       </IconButton>
@@ -72,25 +66,57 @@ const Setting: React.FC = () => {
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         PaperProps={{
-          sx: { p: 2, minWidth: 220, direction: lang === "fa" ? "rtl" : "ltr" },
+          sx: {
+            p: 2,
+            minWidth: 220,
+            direction: lang === "fa" ? "rtl" : "ltr",
+            bgcolor: theme.palette.background.paper,
+          },
         }}
       >
         <Box sx={{ mb: 2 }}>
-          <Typography sx={{ mb: 1, fontWeight: 500 }}>{t("mode")}</Typography>
+          <Typography
+            sx={{ mb: 1, fontWeight: 500, color: theme.palette.text.primary }}
+          >
+            {t("mode")}
+          </Typography>
+
           <ToggleButtonGroup
             value={mode}
             exclusive
             onChange={handleModeChange}
             size="small"
             fullWidth
+            sx={{ direction: lang === "fa" ? "rtl" : "ltr" }}
           >
-            <ToggleButton value="light" sx={{ display: "flex", gap: 1 }}>
-              {" "}
-              <LightModeOutlinedIcon sx={{ fontSize: "16px" }} /> {t("light")}
+            <ToggleButton
+              value="light"
+              sx={{
+                display: "flex",
+                gap: 1,
+                color: theme.palette.text.primary,
+                "&.Mui-selected": {
+                  backgroundColor: theme.custom.cardSecondary,
+                  color: theme.palette.text.primary,
+                },
+              }}
+            >
+              <LightModeOutlinedIcon sx={{ fontSize: 16 }} /> {t("light")}
             </ToggleButton>
-            <ToggleButton value="dark" sx={{ display: "flex", gap: 1 }}>
-              {" "}
-              <DarkModeOutlinedIcon sx={{ fontSize: "16px" }} /> {t("dark")}
+
+            <ToggleButton
+              value="dark"
+              sx={{
+                display: "flex",
+                gap: 1,
+                color: theme.palette.text.primary,
+                "&.Mui-selected": {
+                  backgroundColor: theme.custom.cardSecondary,
+                  color: theme.palette.text.primary,
+                },
+              }}
+            >
+              <DarkModeOutlinedIcon sx={{ fontSize: 16 }} /> {t("dark")}
             </ToggleButton>
           </ToggleButtonGroup>
         </Box>
@@ -98,18 +124,43 @@ const Setting: React.FC = () => {
         <Divider sx={{ my: 1 }} />
 
         <Box sx={{ mt: 2 }}>
-          <Typography sx={{ mb: 1, fontWeight: 500 }}>
-            {t("Language") || "Language"}
+          <Typography
+            sx={{ mb: 1, fontWeight: 500, color: theme.palette.text.primary }}
+          >
+            {t("language")}
           </Typography>
+
           <ToggleButtonGroup
             value={lang}
             exclusive
             onChange={handleLangChange}
             size="small"
             fullWidth
+            sx={{ direction: lang === "fa" ? "rtl" : "ltr" }}
           >
-            <ToggleButton value="en">{t("en")}</ToggleButton>
-            <ToggleButton value="fa">{t("fa")}</ToggleButton>
+            <ToggleButton
+              value="en"
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: theme.custom.cardSecondary,
+                  color: theme.palette.text.primary,
+                },
+              }}
+            >
+              {t("en")}
+            </ToggleButton>
+
+            <ToggleButton
+              value="fa"
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: theme.custom.cardSecondary,
+                  color: theme.palette.text.primary,
+                },
+              }}
+            >
+              {t("fa")}
+            </ToggleButton>
           </ToggleButtonGroup>
         </Box>
 
@@ -120,6 +171,8 @@ const Setting: React.FC = () => {
             fontSize: "17px",
             fontWeight: "bold",
             mt: 2,
+            color: theme.palette.text.primary,
+            direction: lang === "fa" ? "rtl" : "ltr",
           }}
           onClick={login}
         >

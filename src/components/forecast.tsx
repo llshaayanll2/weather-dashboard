@@ -1,16 +1,17 @@
 import { Box, Typography, Paper } from "@mui/material";
 import type { ForecastProps } from "../types";
-import { useThemeMode } from "../context/theme";
 import Divider from "@mui/material/Divider";
 import { useTranslation } from "react-i18next";
-import { useLanguage } from "../context/language";
+import { useLanguage } from "../context/languageContext";
+import { useTheme } from "@mui/material/styles";
 
 const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
   if (!forecast || forecast.length === 0) return null;
 
   const { t } = useTranslation();
-  const { mode } = useThemeMode();
   const { lang } = useLanguage();
+  const theme = useTheme();
+
   const locale = lang === "fa" ? "fa-IR" : "en-US";
 
   const days: {
@@ -68,15 +69,16 @@ const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
         mx: "auto",
         display: "flex",
         flexDirection: "column",
-        bgcolor: mode === "light" ? "#e1e9ee" : "#292f45",
+        bgcolor: theme.custom.card,
         direction: lang === "fa" ? "rtl" : "ltr",
+        overflowX: "hidden",
       }}
     >
       <Typography
         sx={{
           fontWeight: "bold",
           fontSize: "22px",
-          color: mode === "light" ? "#074979" : "#e1e9ee",
+          color: theme.palette.text.primary,
           mb: 1.5,
           textAlign: lang === "fa" ? "right" : "left",
         }}
@@ -87,9 +89,12 @@ const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
       <Box
         sx={{
           display: "flex",
-          gap: 7,
-          flexWrap: "wrap",
+          flexDirection: { xs: "column", sm: "row" },
+          gap: { xs: 3, sm: 7 },
+          flexWrap: { xs: "nowrap", sm: "wrap" },
           justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
         }}
       >
         {fiveDays.map((d) => {
@@ -101,16 +106,18 @@ const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
               elevation={3}
               sx={{
                 p: 1.2,
-                width: "130px",
+                width: { xs: "100%", sm: "130px" },
+                maxWidth: 350,
                 textAlign: "center",
                 borderRadius: 6,
-                bgcolor: mode === "light" ? "#cdd9e0" : "#3F4861",
+                bgcolor: theme.custom.cardSecondary,
+                direction: "rtl",
               }}
             >
               <Typography
                 sx={{
                   fontWeight: "bold",
-                  color: mode === "light" ? "#074979" : "#e1e9ee",
+                  color: theme.palette.text.primary,
                   fontSize: "17px",
                   mt: 2.5,
                 }}
@@ -121,7 +128,7 @@ const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
               <Divider
                 sx={{
                   mt: 0.8,
-                  borderColor: mode === "light" ? "black" : "white",
+                  borderColor: theme.palette.divider,
                   opacity: 0.3,
                   width: "40%",
                   mx: "auto",
@@ -147,7 +154,7 @@ const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
                   fontWeight: "bold",
                   mt: 1,
                   mb: 2,
-                  color: mode === "light" ? "#074979" : "#e1e9ee",
+                  color: theme.palette.text.primary,
                 }}
               >
                 {d.temp}°C
