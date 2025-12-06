@@ -24,7 +24,6 @@ const Setting: React.FC = () => {
   const { lang, changeLanguage } = useLanguage();
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const { mode, setMode } = useThemeMode();
   const theme = useTheme();
 
@@ -63,13 +62,18 @@ const Setting: React.FC = () => {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: theme.direction === "rtl" ? "left" : "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: theme.direction === "rtl" ? "left" : "right",
+        }}
         PaperProps={{
           sx: {
             p: 2,
             minWidth: 220,
-            direction: lang === "fa" ? "rtl" : "ltr",
             bgcolor: theme.palette.background.paper,
           },
         }}
@@ -87,7 +91,6 @@ const Setting: React.FC = () => {
             onChange={handleModeChange}
             size="small"
             fullWidth
-            sx={{ direction: lang === "fa" ? "rtl" : "ltr" }}
           >
             <ToggleButton
               value="light"
@@ -97,11 +100,11 @@ const Setting: React.FC = () => {
                 color: theme.palette.text.primary,
                 "&.Mui-selected": {
                   backgroundColor: theme.custom.cardSecondary,
-                  color: theme.palette.text.primary,
                 },
               }}
             >
-              <LightModeOutlinedIcon sx={{ fontSize: 16 }} /> {t("light")}
+              <LightModeOutlinedIcon sx={{ fontSize: 16 }} />
+              {t("light")}
             </ToggleButton>
 
             <ToggleButton
@@ -112,11 +115,11 @@ const Setting: React.FC = () => {
                 color: theme.palette.text.primary,
                 "&.Mui-selected": {
                   backgroundColor: theme.custom.cardSecondary,
-                  color: theme.palette.text.primary,
                 },
               }}
             >
-              <DarkModeOutlinedIcon sx={{ fontSize: 16 }} /> {t("dark")}
+              <DarkModeOutlinedIcon sx={{ fontSize: 16 }} />
+              {t("dark")}
             </ToggleButton>
           </ToggleButtonGroup>
         </Box>
@@ -136,14 +139,12 @@ const Setting: React.FC = () => {
             onChange={handleLangChange}
             size="small"
             fullWidth
-            sx={{ direction: lang === "fa" ? "rtl" : "ltr" }}
           >
             <ToggleButton
               value="en"
               sx={{
                 "&.Mui-selected": {
                   backgroundColor: theme.custom.cardSecondary,
-                  color: theme.palette.text.primary,
                 },
               }}
             >
@@ -155,7 +156,6 @@ const Setting: React.FC = () => {
               sx={{
                 "&.Mui-selected": {
                   backgroundColor: theme.custom.cardSecondary,
-                  color: theme.palette.text.primary,
                 },
               }}
             >
@@ -172,11 +172,11 @@ const Setting: React.FC = () => {
             fontWeight: "bold",
             mt: 2,
             color: theme.palette.text.primary,
-            direction: lang === "fa" ? "rtl" : "ltr",
           }}
           onClick={login}
         >
-          <LogoutIcon /> {t("exit")}
+          <LogoutIcon />
+          {t("exit")}
         </IconButton>
       </Popover>
     </>

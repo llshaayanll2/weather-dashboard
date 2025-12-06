@@ -77,7 +77,6 @@ const Average: React.FC<Props> = ({ monthlyTemps }) => {
           fontSize: { xs: "16px", md: "20px" },
           mb: 2,
           color: theme.palette.text.primary,
-          textAlign: lang === "fa" ? "right" : "left",
         }}
       >
         {t("avg")}

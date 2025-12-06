@@ -3,7 +3,7 @@ import "@fontsource/roboto/400.css";
 import Setting from "./setting";
 import { useLanguage } from "../context/languageContext";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { NavbarProps } from "../types";
 import { useThemeMode } from "../context/themeContext";
 import { useTheme } from "@mui/material/styles";
@@ -31,33 +31,36 @@ const HeaderDash: React.FC<NavbarProps> = ({ onSearch }) => {
   ];
 
   useEffect(() => {
-    if (city.trim().length > 0) {
-      onSearch(city);
-    }
-  }, [city, onSearch]);
+    onSearch("San Francisco");
+  }, []);
+  const handleSearch = (value: string) => {
+    const v = value.trim();
+    if (!v) return;
+    onSearch(v);
+  };
 
   return (
     <Box
       sx={{
         bgcolor: theme.custom.header,
         boxShadow: 5,
-        direction: lang === "fa" ? "rtl" : "ltr",
         px: { xs: 2, md: 3 },
         py: 1,
+
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         alignItems: { xs: "flex-start", md: "center" },
         justifyContent: "space-between",
-        gap: { xs: 1.5, md: 0 },
-        overflowX: "hidden",
+        gap: { xs: 2, md: 0 },
       }}
     >
       <Box
         sx={{
           display: "flex",
-          gap: 1,
-          alignItems: "center",
           flexDirection: "row",
+          alignItems: "center",
+          gap: 1,
+          width: "100%",
           mb: { xs: 1, md: 0 },
         }}
       >
@@ -79,25 +82,33 @@ const HeaderDash: React.FC<NavbarProps> = ({ onSearch }) => {
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "row", sm: "row", md: "row" },
+          width: { xs: "100%", md: "auto" },
           alignItems: "center",
-          gap: 2,
-          flexDirection: { xs: "column", sm: "row" },
-          width: { xs: "100%", sm: "auto" },
+          gap: 1,
         }}
       >
         <Autocomplete
           freeSolo
           options={cityList}
           value={city}
-          onInputChange={(_, newValue) => setCity(newValue)}
-          sx={{
-            minWidth: { xs: "100%", sm: 260, md: 320 },
-            direction: lang === "fa" ? "rtl" : "ltr",
+          onInputChange={(_, v) => setCity(v)}
+          onChange={(_, v) => {
+            if (typeof v === "string") {
+              setCity(v);
+              handleSearch(v);
+            }
           }}
           renderInput={(params) => (
             <TextField
               {...params}
               label={t("SearchYourLocation")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSearch(city);
+                }
+              }}
               sx={{
                 "& .MuiInputBase-input": {
                   color: theme.palette.text.primary,
@@ -106,18 +117,13 @@ const HeaderDash: React.FC<NavbarProps> = ({ onSearch }) => {
                   color:
                     mode === "light" ? theme.palette.text.primary : "#b0b3c2",
                 },
-                "& fieldset": {
-                  borderColor: theme.custom.inputBorder,
-                },
-                "&:hover fieldset": {
-                  borderColor: theme.custom.inputHover,
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: theme.custom.inputHover,
-                },
               }}
             />
           )}
+          sx={{
+            minWidth: { xs: "80%", sm: 260, md: 320 },
+            direction: lang === "fa" ? "rtl" : "ltr",
+          }}
         />
 
         <Setting />

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import { useLanguage } from "../context/languageContext";
-import theme from "../theme";
+import { useTheme } from "@mui/material/styles";
 
 const LiveClock = () => {
   const { lang } = useLanguage();
+  const theme = useTheme();
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -22,11 +23,13 @@ const LiveClock = () => {
   };
 
   const locale = lang === "fa" ? "fa-IR" : "en-US";
+
   return (
     <Typography
       sx={{
-        fontSize: "15px",
+        fontSize: { xs: "12px", sm: "14px" },
         color: theme.palette.text.primary,
+        whiteSpace: "nowrap",
       }}
     >
       {time.toLocaleString(locale, options)}

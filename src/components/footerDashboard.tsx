@@ -15,7 +15,7 @@ const Footer = () => {
     <Box
       sx={{
         bgcolor: theme.custom.footer,
-        p: { xs: 2, md: 3 },
+        p: { xs: 1.5, md: 2 },
         position: "fixed",
         width: "100%",
         left: 0,
@@ -28,19 +28,19 @@ const Footer = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          justifyContent: { xs: "center", sm: "space-between" },
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "space-between",
           alignItems: "center",
-          gap: { xs: 1, sm: 2, md: 3 },
-          textAlign: "center",
+          width: "100%",
+          gap: { xs: 1, md: 0 },
         }}
       >
         <Typography
           sx={{
             color: theme.palette.text.primary,
-            fontSize: { xs: "12px", md: "14px" },
+            fontSize: { xs: "12px", md: "15px" },
             whiteSpace: "nowrap",
-            px: 2,
+            textAlign: "center",
           }}
         >
           {t("nadin")}
@@ -49,36 +49,51 @@ const Footer = () => {
         <Box
           sx={{
             display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
+            flexDirection: "row",
             alignItems: "center",
-            gap: { xs: 1.2, sm: 3 },
-            px: 2,
+            gap: { xs: 2, md: 3 },
+            justifyContent: "center",
+            flexWrap: "nowrap",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <MailOutlineIcon sx={{ color: theme.palette.text.primary }} />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 0.7,
+              whiteSpace: "nowrap",
+            }}
+          >
+            <MailOutlineIcon
+              sx={{ color: theme.palette.text.primary, fontSize: 18 }}
+            />
             <Typography
               sx={{
                 color: theme.palette.text.primary,
-                fontSize: "14px",
-                whiteSpace: "nowrap",
+                fontSize: { xs: "11px", md: "15px" },
               }}
             >
               {t("contact")}
             </Typography>
           </Box>
 
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <CalendarMonthIcon sx={{ color: theme.palette.text.primary }} />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 0.7,
+              whiteSpace: "nowrap",
+            }}
+          >
+            <CalendarMonthIcon
+              sx={{ color: theme.palette.text.primary, fontSize: 18 }}
+            />
             <Typography
               sx={{
-                fontSize: "14px",
-                whiteSpace: "nowrap",
-                minWidth: "100px",
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
                 color: theme.palette.text.primary,
+                fontSize: { xs: "11px", md: "15px" },
+                display: "flex",
+                alignItems: "center",
               }}
             >
               <LiveClock />

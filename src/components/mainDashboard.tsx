@@ -5,6 +5,7 @@ import Average from "./average";
 import { t } from "i18next";
 import { useLanguage } from "../context/languageContext";
 import { useTheme } from "@mui/material/styles";
+import Footer from "./footerDashboard";
 
 const MainDash: React.FC<MainWeatherProps> = ({ weather }) => {
   const { lang } = useLanguage();
@@ -175,6 +176,7 @@ const MainDash: React.FC<MainWeatherProps> = ({ weather }) => {
       <Average
         monthlyTemps={[12, 15, 20, 25, 30, 35, 32, 31, 26, 20, 15, 10]}
       />
+      <Footer />
     </Box>
   );
 };

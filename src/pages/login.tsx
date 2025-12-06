@@ -1,14 +1,5 @@
 import "@fontsource/roboto/700.css";
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
+import {Box,Button,FormControl,InputLabel,MenuItem,Select,TextField,Typography,} from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
@@ -22,11 +13,10 @@ const Login: React.FC = () => {
   const { lang, changeLanguage } = useLanguage();
   const theme = useTheme();
 
-  const [name, setName] = useState(""); 
+  const [name, setName] = useState("");
 
   const handleLogin = () => {
     if (!name.trim()) {
-     
       return;
     }
     navigate("/dashboard");
@@ -47,7 +37,6 @@ const Login: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         gap: 2,
-        direction: lang === "fa" ? "rtl" : "ltr",
         px: 2,
         py: 2,
         boxSizing: "border-box",
@@ -97,8 +86,8 @@ const Login: React.FC = () => {
               label={t("EnterYourName")}
               fullWidth
               required
-              value={name} 
-              onChange={(e) => setName(e.target.value)} 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               sx={{
                 "& .MuiInputBase-input": {
                   color: theme.palette.text.primary,

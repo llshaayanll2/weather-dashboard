@@ -70,8 +70,6 @@ const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
         display: "flex",
         flexDirection: "column",
         bgcolor: theme.custom.card,
-        direction: lang === "fa" ? "rtl" : "ltr",
-        overflowX: "hidden",
       }}
     >
       <Typography
@@ -80,7 +78,6 @@ const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
           fontSize: "22px",
           color: theme.palette.text.primary,
           mb: 1.5,
-          textAlign: lang === "fa" ? "right" : "left",
         }}
       >
         {t("fiveDays")}
@@ -111,7 +108,6 @@ const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
                 textAlign: "center",
                 borderRadius: 6,
                 bgcolor: theme.custom.cardSecondary,
-                direction: "rtl",
               }}
             >
               <Typography
